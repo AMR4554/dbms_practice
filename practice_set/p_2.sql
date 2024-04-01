@@ -267,3 +267,40 @@ delete from employee where id=545;
 use hr;
 desc employees;
 desc departments;
+
+#######################################################################################################################################################
+
+use hr;
+-- 1. Write a query to select all employees and their corresponding department names
+select e.*,d.department_name from employees e
+join departments d on e.department_id=d.department_id;
+
+-- 2. Write a query to select all employees who work in the 'Sales' department
+select e.*, d.department_name from employees e
+join departments d on e.department_id=d.department_id
+where d.department_name="sales";
+
+-- 3. Write a query to select the average salary for each department.
+select department_id,avg(salary) from employees group by department_id;
+
+-- 4. Write a query to select the total salary for each department.
+select sum(salary) total,department_id from employees group by department_id ;
+
+-- 5. Write a query to select all employees and their corresponding department names, but only display those employees who have a manager
+select e.*, d.department_name from employees e
+join departments d on e.department_id=d.department_id
+where e.manager_id is not null;
+
+-- 6. Write a query that returns all employees who have a salary greater than the average salary of their department.
+select * from employees where salary>(select avg(salary) from employees);
+
+-- 7. Write a query that returns the names of all departments that have more than 10 employees
+select d.department_name from departments d
+join employees e on e.department_id=d.department_id
+group by e.department_id having count(employee_id)>10;
+
+-- 8. Write a query that returns the names of all employees who work in departments that have a total salary greater than $1,000,000.
+select department_id,sum(salary) total from employees group by department_id having total>1000000;
+
+-- 9. Write a query that returns the average salary of all employees who have been with the company for less than 3 years
+select avg(salary) from employees where employee_id in (select employee_id from employees where timestampdiff(year,hire_date,now())>3);
