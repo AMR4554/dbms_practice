@@ -1,3 +1,4 @@
+#Thank you for sharing
 create database practice_set;
 use practice_set;
 
